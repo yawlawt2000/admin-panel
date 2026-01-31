@@ -3,68 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSO VIP - Admin Panel</title>
+    <title>YT PLUS VIP - Premium Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap');
-        :root { --primary: #ff3131; --dark: #0f172a; --green: #22c55e; --bg: #f1f5f9; }
-        body { font-family: 'Pyidaungsu', sans-serif; background: var(--bg); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         
-        .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 100%; max-width: 400px; margin-bottom: 20px; box-sizing: border-box; }
-        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; width: 100%; max-width: 400px; margin-bottom: 20px; }
-        .menu-item { background: white; padding: 12px 2px; border-radius: 12px; text-align: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .menu-item i { display: block; font-size: 18px; color: var(--primary); margin-bottom: 5px; }
-        .menu-item span { font-size: 10px; font-weight: bold; }
+        :root { 
+            --primary: #ff3131; 
+            --primary-dark: #d62828;
+            --dark: #0f172a; 
+            --green: #10b981; 
+            --bg: #f8fafc; 
+            --card-bg: #ffffff;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
 
-        .user-card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.02); width: 100%; max-width: 400px; box-sizing: border-box; }
-        .info-sub { font-size: 11px; color: #64748b; display: block; margin-top: 2px; }
+        * { transition: all 0.3s ease; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Pyidaungsu', sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 20px 15px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            color: var(--dark);
+        }
+
+        h2 { font-weight: 700; letter-spacing: 1px; margin-bottom: 25px; }
+
+        /* Navigation Menu */
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 12px; 
+            width: 100%; 
+            max-width: 450px; 
+            margin-bottom: 30px; 
+        }
+
+        .menu-item { 
+            background: var(--card-bg); 
+            padding: 15px 5px; 
+            border-radius: 16px; 
+            text-align: center; 
+            cursor: pointer; 
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .menu-item:hover { transform: translateY(-5px); background: #fff; }
+        .menu-item:active { transform: scale(0.95); }
+        .menu-item i { display: block; font-size: 22px; color: var(--primary); margin-bottom: 8px; }
+        .menu-item span { font-size: 11px; font-weight: 700; color: #475569; }
+
+        /* Cards & Containers */
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 24px; 
+            box-shadow: var(--shadow); 
+            width: 100%; 
+            max-width: 450px; 
+            margin-bottom: 25px; 
+        }
+
+        .user-card { 
+            background: white; 
+            padding: 18px; 
+            border-radius: 18px; 
+            margin-bottom: 12px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 6px solid var(--primary); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+            width: 100%; 
+            max-width: 450px;
+        }
+
+        /* Inputs & Buttons */
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            margin: 10px 0; 
+            border: 2px solid #f1f5f9; 
+            border-radius: 14px; 
+            outline: none; 
+            background: #f8fafc;
+            font-size: 15px;
+        }
+
+        input:focus { border-color: var(--primary); background: #fff; }
+
+        .btn { 
+            width: 100%; 
+            padding: 14px; 
+            border: none; 
+            border-radius: 14px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            color: white; 
+            background: var(--primary); 
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(255, 49, 49, 0.3);
+        }
+
+        .btn:hover { background: var(--primary-dark); }
         
-        .copy-btn { background: #f1f5f9; border: none; padding: 5px 8px; border-radius: 8px; cursor: pointer; color: var(--dark); font-size: 12px; margin-left: 8px; }
-        .copy-btn:active { background: #e2e8f0; }
+        .topup-btn { 
+            background: var(--green); 
+            color: white; 
+            padding: 10px 16px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+        }
 
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1.5px solid #e2e8f0; border-radius: 12px; outline: none; text-align: center; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; background: var(--primary); }
-        .topup-btn { background: var(--green); color: white; padding: 8px 12px; border: none; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .copy-btn { 
+            background: #f1f5f9; 
+            border: none; 
+            padding: 6px 10px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: var(--dark); 
+            margin-left: 8px; 
+        }
 
-        #topup-modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:100; justify-content:center; align-items:center; }
-        .modal-content { background:white; width:330px; padding:20px; border-radius:15px; text-align:center; }
-        #slip-area { background: white; padding: 20px; border: 1px solid #eee; margin-bottom: 15px; border-top: 10px solid var(--green); }
-        .slip-title { color: var(--green); font-size: 20px; font-weight: bold; margin-bottom: 15px; display: block; }
-        .slip-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #ddd; padding: 8px 0; font-size: 13px; }
+        /* Modal & Slip Styling */
+        #topup-modal { 
+            display: none; 
+            position: fixed; 
+            top:0; left:0; width:100%; height:100%; 
+            background: rgba(15, 23, 42, 0.8); 
+            backdrop-filter: blur(4px);
+            z-index: 100; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px;
+        }
+
+        .modal-content { 
+            background: white; 
+            width: 100%; 
+            max-width: 380px; 
+            padding: 25px; 
+            border-radius: 24px; 
+            text-align: center; 
+            position: relative;
+        }
+
+        #slip-area { 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 15px;
+            border: 1px solid #edf2f7; 
+            margin-bottom: 20px; 
+            border-top: 12px solid var(--green); 
+        }
+
+        .slip-title { color: var(--green); font-size: 22px; font-weight: 800; display: block; margin-bottom: 20px; }
+        .slip-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding: 10px 0; font-size: 14px; }
+
+        .info-sub { font-size: 12px; color: #64748b; display: block; margin-top: 4px; }
+        .trash-btn { background: #fee2e2; color: #ef4444; border: none; width: 35px; height: 35px; border-radius: 10px; cursor: pointer; }
+        .trash-btn:hover { background: #ef4444; color: white; }
+
     </style>
 </head>
 <body>
 
-    <h2 style="color: var(--dark);">KSO VIP <span style="color:var(--primary)">ADMIN</span></h2>
+    <h2 style="color: var(--dark);">YT PLUS VIP <span style="color:var(--primary)">ADMIN</span></h2>
 
     <div class="menu-grid">
         <div class="menu-item" onclick="showPage('create-page')"><i class="fas fa-user-plus"></i><span>အကောင့်ဖွင့်</span></div>
-        <div class="menu-item" onclick="showPage('admin-list-page')"><i class="fas fa-user-shield"></i><span>Admin ဖွင့်</span></div>
-        <div class="menu-item" onclick="showPage('user-list-page')"><i class="fas fa-users"></i><span>User ဖွင့်</span></div>
-        <div class="menu-item" onclick="showPage('topup-page')"><i class="fas fa-money-bill-wave"></i><span>ငွေဖြည့်</span></div>
+        <div class="menu-item" onclick="showPage('admin-list-page')"><i class="fas fa-user-shield"></i><span>Admin စာရင်း</span></div>
+        <div class="menu-item" onclick="showPage('user-list-page')"><i class="fas fa-users"></i><span>User စာရင်း</span></div>
+        <div class="menu-item" onclick="showPage('topup-page')"><i class="fas fa-wallet"></i><span>ငွေဖြည့်</span></div>
     </div>
 
     <div id="create-page" class="card">
-        <h4 style="text-align:center; margin-top:0;">အကောင့်သစ်ဖွင့်ရန်</h4>
+        <h3 style="text-align:center; margin-top:0; color: var(--dark);">အကောင့်သစ်ဖွင့်ရန်</h3>
         <input type="text" id="reg-id" placeholder="နာမည် (ID)">
         <input type="text" id="reg-pw" placeholder="စကားဝှက် (PW)">
         <input type="number" id="reg-bal" placeholder="စတင်မည့်ငွေ (ငွေဖြည့်)">
-        <button class="btn" onclick="handleCreate()">စာရင်းသွင်းမည်</button>
+        <button class="btn" style="margin-top: 10px;" onclick="handleCreate()">စာရင်းသွင်းမည်</button>
     </div>
 
-    <div id="admin-list-page" style="display:none; width: 100%; max-width: 400px;">
-        <h4 style="margin-bottom:10px;">Admin မှ ဖွင့်ထားသောစာရင်း</h4>
+    <div id="admin-list-page" style="display:none; width: 100%; max-width: 450px;">
+        <h4 style="margin: 0 0 15px 5px; font-size: 18px;">Admin မှ ဖွင့်ထားသောစာရင်း</h4>
         <div id="admin-only-list"></div>
     </div>
 
-    <div id="user-list-page" style="display:none; width: 100%; max-width: 400px;">
-        <h4 style="margin-bottom:10px;">User များမှတစ်ဆင့် ဖွင့်ထားသောစာရင်း</h4>
+    <div id="user-list-page" style="display:none; width: 100%; max-width: 450px;">
+        <h4 style="margin: 0 0 15px 5px; font-size: 18px;">User များမှတစ်ဆင့် ဖွင့်ထားသောစာရင်း</h4>
         <div id="user-side-list"></div>
     </div>
 
-    <div id="topup-page" style="display:none; width: 100%; max-width: 400px;">
-        <h4 style="margin-bottom:10px;">ငွေဖြည့်သွင်းခြင်း (Admin စာရင်း)</h4>
+    <div id="topup-page" style="display:none; width: 100%; max-width: 450px;">
+        <h4 style="margin: 0 0 15px 5px; font-size: 18px;">ငွေဖြည့်သွင်းခြင်း (Admin စာရင်း)</h4>
         <div id="topup-list"></div>
     </div>
 
@@ -76,11 +218,11 @@
                 <div class="slip-row"><span>ရက်စွဲ:</span> <span id="slip-date"></span></div>
                 <div class="slip-row"><span>ယခင်လက်ကျန်:</span> <span id="old-bal-text">0</span></div>
                 <div class="slip-row"><span>ဖြည့်သွင်းငွေ:</span> <b id="topup-amt-text" style="color:var(--green)">+ 0</b></div>
-                <div class="slip-row" style="font-weight:bold; color:var(--green); border:none; font-size:16px;"><span>စုစုပေါင်း:</span> <b id="new-bal-text">0</b></div>
+                <div class="slip-row" style="font-weight:bold; color:var(--green); border:none; font-size:18px; margin-top:10px;"><span>စုစုပေါင်း:</span> <b id="new-bal-text">0</b></div>
             </div>
             <input type="number" id="input-amt" placeholder="ဖြည့်မည့်ပမာဏ" oninput="calculateTotal()">
-            <button class="btn" style="background:var(--green); margin-bottom:5px;" onclick="saveTopup()">ငွေဖြည့်မည် (Save Slip)</button>
-            <button class="btn" style="background:#64748b;" onclick="closeModal()">ပိတ်မည်</button>
+            <button class="btn" style="background:var(--green); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); margin-bottom:10px;" onclick="saveTopup()">ငွေဖြည့်မည် (Save Slip)</button>
+            <button class="btn" style="background:#64748b; box-shadow: none;" onclick="closeModal()">ပိတ်မည်</button>
         </div>
     </div>
 
@@ -88,6 +230,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, doc, setDoc, collection, onSnapshot, updateDoc, increment, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+    // Firebase Configuration (သတိပြုရန်: လက်တွေ့အသုံးပြုလျှင် Config ကို လုံခြုံအောင်ထားပါ)
     const firebaseConfig = {
         apiKey: "AIzaSyDGCsxM1ccZ_ZswwNPZDI-ykOm5yJU1CIw",
         authDomain: "yt-plus-f2adb.firebaseapp.com",
@@ -105,7 +248,7 @@
     window.copyText = (text, btn) => {
         navigator.clipboard.writeText(text);
         const originalText = btn.innerHTML;
-        btn.innerHTML = "<i class='fas fa-check'></i>";
+        btn.innerHTML = "<i class='fas fa-check' style='color:var(--green)'></i>";
         setTimeout(() => { btn.innerHTML = originalText; }, 1500);
     };
 
@@ -119,12 +262,25 @@
         const id = document.getElementById('reg-id').value.trim();
         const pw = document.getElementById('reg-pw').value.trim();
         const bal = parseInt(document.getElementById('reg-bal').value) || 0;
-        if(!id || !pw) return alert("ဖြည့်ပါ");
-        const exp = new Date(); exp.setDate(exp.getDate() + 30);
+        if(!id || !pw) return alert("အချက်အလက်ပြည့်စုံစွာဖြည့်ပါ");
+        
+        const exp = new Date(); 
+        exp.setDate(exp.getDate() + 30);
         const expiryDate = exp.toISOString().split('T')[0];
-        await setDoc(doc(db, "users", id), { username: id, password: pw, balance: bal, createdBy: "Admin", expiryDate: expiryDate });
-        alert("အောင်မြင်ပါသည်");
-        document.getElementById('reg-id').value=""; document.getElementById('reg-pw').value=""; document.getElementById('reg-bal').value="";
+        
+        try {
+            await setDoc(doc(db, "users", id), { 
+                username: id, 
+                password: pw, 
+                balance: bal, 
+                createdBy: "Admin", 
+                expiryDate: expiryDate 
+            });
+            alert("အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်");
+            document.getElementById('reg-id').value=""; 
+            document.getElementById('reg-pw').value=""; 
+            document.getElementById('reg-bal').value="";
+        } catch (e) { alert("အမှားအယွင်းရှိပါသည်"); }
     };
 
     window.openTopupModal = async (id) => {
@@ -136,6 +292,7 @@
         document.getElementById('old-bal-text').innerText = currentBalance.toLocaleString();
         document.getElementById('topup-amt-text').innerText = "+ 0";
         document.getElementById('new-bal-text').innerText = currentBalance.toLocaleString();
+        document.getElementById('input-amt').value = "";
         document.getElementById('topup-modal').style.display = 'flex';
     };
 
@@ -147,18 +304,26 @@
 
     window.saveTopup = async () => {
         const amt = parseInt(document.getElementById('input-amt').value);
-        if(!amt || amt <= 0) return alert("ငွေထည့်ပါ");
+        if(!amt || amt <= 0) return alert("ဖြည့်မည့်ပမာဏထည့်ပါ");
+        
         await updateDoc(doc(db, "users", selectedId), { balance: increment(amt) });
+        
         html2canvas(document.getElementById('slip-area')).then(canvas => {
-            let link = document.createElement('a'); link.download = `Slip-${selectedId}.png`;
-            link.href = canvas.toDataURL(); link.click();
+            let link = document.createElement('a'); 
+            link.download = `KSO-Slip-${selectedId}.png`;
+            link.href = canvas.toDataURL(); 
+            link.click();
         });
-        alert("အောင်မြင်ပါသည်");
+        
+        alert("ငွေဖြည့်ခြင်း အောင်မြင်ပါသည်");
         closeModal();
     };
 
     window.closeModal = () => document.getElementById('topup-modal').style.display = 'none';
-    window.handleDelete = async (id) => { if(confirm(id + " ကို ဖျက်မည်လား?")) await deleteDoc(doc(db, "users", id)); };
+    
+    window.handleDelete = async (id) => { 
+        if(confirm(id + " ကို ဖျက်ရန် သေချာပါသလား?")) await deleteDoc(doc(db, "users", id)); 
+    };
 
     onSnapshot(collection(db, "users"), (snap) => {
         const adminCont = document.getElementById('admin-only-list');
@@ -172,17 +337,40 @@
             const expVal = u.expiryDate || "-";
             
             if (u.createdBy === "Admin") {
-                adminHtml += `<div class="user-card"><div><b>ID: ${d.id} <button class="copy-btn" onclick="copyText('${d.id}', this)"><i class="far fa-copy"></i></button></b><span class="info-sub">PW: ${u.password}</span></div><button onclick="handleDelete('${d.id}')" style="background:none; border:none; color:red;"><i class="fas fa-trash"></i></button></div>`;
-                topupHtml += `<div class="user-card"><div><b>ID: ${d.id}</b><span style="color:var(--green)">လက်ရှိ: ${balVal}</span></div><button class="topup-btn" onclick="openTopupModal('${d.id}')">ငွေဖြည့်</button></div>`;
+                adminHtml += `
+                <div class="user-card">
+                    <div>
+                        <b>${d.id} <button class="copy-btn" onclick="copyText('${d.id}', this)"><i class="far fa-copy"></i></button></b>
+                        <span class="info-sub">Password: ${u.password}</span>
+                    </div>
+                    <button class="trash-btn" onclick="handleDelete('${d.id}')"><i class="fas fa-trash-alt"></i></button>
+                </div>`;
+                
+                topupHtml += `
+                <div class="user-card">
+                    <div>
+                        <b>${d.id}</b>
+                        <span style="color:var(--green); font-size:12px; font-weight:bold;">လက်ကျန်: ${balVal} MMK</span>
+                    </div>
+                    <button class="topup-btn" onclick="openTopupModal('${d.id}')">ငွေဖြည့်မည်</button>
+                </div>`;
             } 
             else if (u.createdBy && u.createdBy !== "Admin" && u.createdBy !== d.id) {
-                userHtml += `<div class="user-card"><div><b>ID: ${d.id} <button class="copy-btn" onclick="copyText('${d.id}', this)"><i class="far fa-copy"></i></button></b><span class="info-sub">By: ${u.createdBy}</span><span class="info-sub" style="color:var(--primary)">ကုန်ရက်: ${expVal}</span></div><button onclick="handleDelete('${d.id}')" style="background:none; border:none; color:red;"><i class="fas fa-trash"></i></button></div>`;
+                userHtml += `
+                <div class="user-card">
+                    <div>
+                        <b>${d.id} <button class="copy-btn" onclick="copyText('${d.id}', this)"><i class="far fa-copy"></i></button></b>
+                        <span class="info-sub"><i class="fas fa-user-edit"></i> By: ${u.createdBy}</span>
+                        <span class="info-sub" style="color:var(--primary); font-weight:bold;"><i class="fas fa-calendar-times"></i> Expiry: ${expVal}</span>
+                    </div>
+                    <button class="trash-btn" onclick="handleDelete('${d.id}')"><i class="fas fa-trash-alt"></i></button>
+                </div>`;
             }
         });
 
-        adminCont.innerHTML = adminHtml || "<p style='text-align:center; font-size:12px; color:#999;'>စာရင်းမရှိပါ</p>";
-        userCont.innerHTML = userHtml || "<p style='text-align:center; font-size:12px; color:#999;'>စာရင်းမရှိပါ</p>";
-        topupCont.innerHTML = topupHtml || "<p style='text-align:center; font-size:12px; color:#999;'>စာရင်းမရှိပါ</p>";
+        adminCont.innerHTML = adminHtml || "<p style='text-align:center; padding:20px; color:#999;'>စာရင်းမရှိသေးပါ</p>";
+        userCont.innerHTML = userHtml || "<p style='text-align:center; padding:20px; color:#999;'>စာရင်းမရှိသေးပါ</p>";
+        topupCont.innerHTML = topupHtml || "<p style='text-align:center; padding:20px; color:#999;'>စာရင်းမရှိသေးပါ</p>";
     });
 
     showPage('create-page');
